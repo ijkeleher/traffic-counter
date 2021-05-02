@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import os
 import sys
+import dateutil.parser
+import pandas as pd
+import datetime
 
 """You can probably guess what this does by the name.
 
@@ -10,16 +13,19 @@ Returns:
     log: file contents of recorded traffic log
 """
 def read_file(fname) -> str:
+    # hopefully this path works on windows/linux
     __location__ = os.path.realpath(
     os.path.join(sys.path[0], fname))
-    log = open(fname, 'r')
-    return log.read()
 
 def count_total_cars():
     pass
 
-def count_daily_cars():
-    pass
+    with open(fname, 'r') as log:
+        lines = log.readlines()
+        for line in lines:
+            line = line.strip() # for safety
+            log_line = ((line[0:19]), (line[20:len(line)]))
+            log_list += [log_line]
 
 def count_most_cars():
     pass
