@@ -74,6 +74,71 @@ def count_most_cars(log_list) -> list:
 
     return top_3_list
 
+"""Returns the 1.5 hour contiguous period with the least cars.
+"""
+def count_least_cars(log_list) -> str:
+
+    # sorts in place by timestamp
+    log_list.sort(key=lambda tpl: dateutil.parser.isoparse(tpl[0]))  
+
+    # create a dataframe with appropriate types for our operations
+    df = pd.DataFrame(log_list, columns =['time', 'count'])
+    df['time']= pd.to_datetime(df['time'])
+    df['count']= pd.to_numeric(df['count'], downcast='integer')
+
+    # time_period = datetime.timedelta(hours=1, minutes=30)
+
+    # print(df_resample.dtypes)
+
+    df_resampled = df.resample('1.5H', on='time', origin='start').sum()
+
+    print(df_resampled.to_string())
+    # the email says "assume clean input" but there are many missing half hour periods
+    # thus we return zero as the min.
+    # i've included maximum here for testing purposes
+
+    max = df_resampled[df_resampled['count']==df_resampled['count'].max()]
+    min = df_resampled[df_resampled['count']==df_resampled['count'].min()]
+    # print(max)
+    # print(min)
+
+
+
+    # df.resample("90T").sum()
+    # df['date'] = pd.to_datetime(df['date'])
+    # df = df['cumsum'].resample('90T', on='timestamp').sum()
+    # df['newsum'] = df['count'].resample('W', on='timestamp').transform('sum')
+
+    # print(df)
+
+    # # grab the highest num so far
+    # log_list.sort(key=lambda tpl: int(tpl[1]), reverse=True)  # sorts in place
+    # min = int(log_list[:1][0][1]) 
+    # # min = min[0][1]
+    # print(f'min {min}')
+
+    # group subdates by day
+    # a dictionary of lists containing tuples...
+    # day_log_dict = {}
+
+    # for tpl in log_list:
+    #     timestamp = tpl[0]
+    #     timestamp = dateutil.parser.isoparse(timestamp)
+    #     date = timestamp.strftime('%Y-%m-%d')        
+
+    #     if date in day_log_dict.keys():
+    #         day_log_dict[date] += [tpl]
+    #     else:
+    #         tpl_list = [tpl]
+    #         day_log_dict[date] = tpl_list
+
+    # analysis 1.5 hour periods
+
+            
+    # print
+    # print(day_log_dict)
+
+
 """
 outputs:
 total num of cars seen
