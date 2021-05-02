@@ -35,6 +35,26 @@ def count_total_cars(log_list) -> int:
         total += num
     return total
 
+def count_daily_cars(log_list) -> dict:
+    # use a hashmap to avoid duplicates
+    daily_count_dict = {}
+
+    for tpl in log_list:
+        count = int(tpl[1])
+        timestamp = tpl[0]
+        timestamp = dateutil.parser.isoparse(timestamp)
+        date = timestamp.strftime('%Y-%m-%d')
+
+        if date in daily_count_dict.keys():
+            count = daily_count_dict[date] + count
+            daily_count_dict[date] = count
+        else:
+            daily_count_dict[date] = count
+        # print(dt_object)
+        # print(type(dt_object))
+    return daily_count_dict
+
+
 """
 outputs:
 total num of cars seen
