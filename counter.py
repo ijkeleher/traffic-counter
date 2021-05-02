@@ -17,8 +17,7 @@ def read_file(fname) -> str:
     __location__ = os.path.realpath(
     os.path.join(sys.path[0], fname))
 
-def count_total_cars():
-    pass
+    log_list = []
 
     with open(fname, 'r') as log:
         lines = log.readlines()
@@ -27,11 +26,14 @@ def count_total_cars():
             log_line = ((line[0:19]), (line[20:len(line)]))
             log_list += [log_line]
 
-def count_most_cars():
-    pass
+    return log_list
 
-def count_least_cars():
-    pass
+def count_total_cars(log_list) -> int:
+    total = 0
+    for tpl in log_list:
+        num = int(tpl[1])
+        total += num
+    return total
 
 """
 outputs:
