@@ -55,6 +55,25 @@ def count_daily_cars(log_list) -> dict:
     return daily_count_dict
 
 
+"""Return the top 3 half hours with the most cars counted
+
+It is assumed that these are non-contigous individual half hour periods
+"""
+def count_most_cars(log_list) -> list:
+
+    log_list.sort(key=lambda tpl: int(tpl[1]), reverse=True)  # sorts in place by count
+    log_list = log_list[:3] # grab top 3
+
+    top_3_list = []
+
+    for tpl in log_list:
+        # print(tpl)
+        tpl_str = f'{tpl[0]} {tpl[1]}'
+        # print(type(tpl_str))
+        top_3_list += [tpl_str]
+
+    return top_3_list
+
 """
 outputs:
 total num of cars seen
@@ -64,11 +83,24 @@ the 1.5 hour period with least cars, i.e. 3 contiguous half hour records
 """
 if __name__ == "__main__":
 
-    if sys.argv[1]:
+    if len(sys.argv) > 1:
         fname = sys.argv[1]
     else:
         fname = 'traffic.log'
     
     log = read_file(fname)
+    # print(log)
 
-    print(log)
+    total_count = count_total_cars(log)
+    # print(total_count)
+
+    daily_count = count_daily_cars(log)
+    # print(daily_count)
+
+    most_cars_count = count_most_cars(log)
+    # print(most_cars_count)
+
+    least_cars_count = count_least_cars(log)
+    # print(least_cars_count)
+
+
