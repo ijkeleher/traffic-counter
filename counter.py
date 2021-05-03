@@ -128,7 +128,7 @@ def count_least_cars(log_list) -> pd.DataFrame:
     # resample the dataframe to get 1.5 hour contigous periods over a day
     df_resampled = df.resample(
         '1.5H', on='time', origin='start', closed='left'
-        ).sum()
+    ).sum()
 
     # grab row by min count and return string
     # comment below line for 1/2 hr periods of count 0
