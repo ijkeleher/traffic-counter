@@ -9,8 +9,7 @@ Program Outputs:
     total: total num of cars seen
     daily: yyyy-mm-dd and num cars seen on that day for all cars in input file
     most_cars: top 3 half hours with most cars in same format as input file
-    least_cars: the 1.5 hour period with least cars, i.e. three contiguous
-    half hour records
+    least_cars: the 1.5 hour period with least cars -> three contiguous 1/2 hrs
 """
 
 import sys
@@ -18,7 +17,7 @@ import dateutil.parser
 import pandas as pd
 
 
-def read_file(fname) -> str:
+def read_file(fname) -> list:
     """You can probably guess what this does by the name.
 
     Args:
@@ -87,7 +86,7 @@ def count_most_cars(log_list) -> list:
     Args:
         log_list (list): a list of tuples
     Returns:
-        top_3_list (list): the top 3 periods
+        top_3_list (list): string detailing the top 3 periods
     """
     # sorts in place by count
     log_list.sort(key=lambda tpl: int(tpl[1]), reverse=True)
@@ -103,13 +102,13 @@ def count_most_cars(log_list) -> list:
     return top_3_list
 
 
-def count_least_cars(log_list) -> pd.DataFrame:
+def count_least_cars(log_list) -> str:
     """Returns the 1.5 hour contiguous period with the least cars.
 
     The email says "assume clean input" but there are many missing
     half hour periods. Rather than just returning "0" I chose to
-    drop all numbers and choose the smallest contiguous period that
-    is not zero.
+    drop these, so this returns the smallest contiguous period that
+    is not zero. You can comment out line 134 to change it back.
 
     Args:
         log_list: a list of tuples
