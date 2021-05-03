@@ -13,23 +13,43 @@ from counter import count_least_cars
 from counter import read_file
 
 # expected data used in these tests here is from traffic.log
-LOG_FILE = read_file('traffic.log')
+F_NAME = 'traffic.log'
+LOG_FILE = read_file(F_NAME)
 
 
-def test_count_total_cars_output(input=LOG_FILE):
+def test_read_file(input=F_NAME):
+    """Check our file reading function
+    Couldn't think of a whole lot to do for this one really.
+    """
+    actual = read_file(input)
+
+    # check return type is valid list of tuples
+    assert type(actual) is list, "test passed"
+    assert actual is not None, "test passed"
+
+    # check first and last items
+    assert actual[0] is not None, "test passed"
+    assert actual[-1] is not None, "test passed"
+    assert type(actual[0]) is tuple, "test tupled"
+    assert type(actual[-1]) is tuple, "test passed"
+
+
+def test_count_total_cars(input=LOG_FILE):
     """Test func to count sum of all cars.
 
     We know the total number contained in traffic.log so this is pretty easy.
     """
     total_actual = count_total_cars(input)
 
+    # check expected output
     expected = 398
     assert expected == total_actual, "test passed"
 
+    # check expected data type
     assert type(total_actual) is int, "test passed"
 
 
-def test_count_daily_cars_output(input=LOG_FILE):
+def test_count_daily_cars(input=LOG_FILE):
     """Check we are outputting the correct counts for daily totals.
     """
     daily_actual = count_daily_cars(input)
@@ -51,7 +71,7 @@ def test_count_daily_cars_output(input=LOG_FILE):
             raise ValueError("incorrect data format, should be YYYY-MM-DD")
 
 
-def test_count_most_cars_output(input=LOG_FILE):
+def test_count_most_cars(input=LOG_FILE):
     """We only care about the top 3 values here.
     """
     actual = count_most_cars(input)
@@ -72,7 +92,7 @@ def test_count_most_cars_output(input=LOG_FILE):
     assert actual[0].split(' ')[1] > actual[2].split(' ')[1], "test passed"
 
 
-def test_count_least_cars_output(input=LOG_FILE):
+def test_count_least_cars(input=LOG_FILE):
     """Check least_cars func with our pre-prepared answer.
 
     Better to do this with multiple sets of small and
