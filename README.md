@@ -7,7 +7,7 @@
 
 ### Run the program
     $ python3 counter.py  # to use default 'traffic.log'
-    $ python counter.py $FILE_NAME  # to use a different logfile
+    $ python3 counter.py $FILE_NAME  # to use a different logfile
 
 You should see something similar to the output below:
 
